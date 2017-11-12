@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Password Manager</title>
+    <meta charset="UTF-8">
+    <style>
+      * {
+        box-sizing: border-box;
+        font-size: 16px;
+      }
+
+      .container {
+        max-width: 400px;
+        margin: 0 auto;
+      }
+
+      table {
+        border: 1px solid black;
+        width: 100%;
+        margin-bottom: 10px;
+        padding: 10px;
+      }
+
+      input {
+        width: 100%;
+        padding: 4px;
+      }
+
+      button {
+        width: 100%;
+        padding: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <form>
+        <table>
+          <tbody>
+            <tr>
+              <td>
+                <input type="text" id="domain" placeholder="Domain">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input type="text" id="username" placeholder="Username">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input type="password" id="master" placeholder="Password">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <button id="copy" class="btn btn-danger">Copy</button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <button id="show" class="btn btn-danger">Show</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+      <table>
+        <tbody>
+          <tr>
+            <td>
+              <input type="text" id="output" placeholder="Output">
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <script src="dist.js"></script>
+  </body>
+</html>

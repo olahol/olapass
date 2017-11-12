@@ -1,0 +1,17 @@
+{
+	"manifest_version": 2,
+  "name": "olapass",
+  "version": "1.0",
+  "description": "olapass web extension",
+  "icons": {
+    "48": "olapass-48.png"
+  },
+  "permissions": [
+    "activeTab"
+  ],
+  "browser_action": {
+    "default_icon": "olapass-32.png",
+    "default_title": "olapass",
+    "default_popup": "popup.html"
+  }
+}
