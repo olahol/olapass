@@ -5,8 +5,8 @@
   "description": "Stateless password manager.",
   "scripts": {
     "test": "npm run lint && mocha",
-    "lint": "eslint olapass.js www/index.js web_extension/popup.js web_extension/content_script.js",
-    "build-www": "browserify www/index.js > www/dist.js",
+    "lint": "eslint olapass.js docs/index.js web_extension/popup.js web_extension/content_script.js",
+    "build-docs": "browserify docs/index.js > docs/dist.js",
     "build-web-extension": "browserify web_extension/popup.js > web_extension/dist.js"
   },
   "author": "Ola Holmström",

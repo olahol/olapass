@@ -1,4 +1,80 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+var olapass = require("../olapass");
+
+window.Olapass = olapass;
+
+function byId (id) {
+  return document.getElementById(id);
+}
+
+function value (id) {
+  return byId(id).value;
+}
+
+function setOutput (msg) {
+  var output = byId("output");
+  output.value = msg;
+}
+
+function copyOutputToClipboard () {
+  var copyText = document.getElementById("output");
+  copyText.select();
+  document.execCommand("Copy");
+}
+
+window.onload = function () {
+  setTimeout(function () {
+    byId("domain").focus();
+    setOutput("");
+  }, 1);
+
+  var show = byId("show");
+  var copy = byId("copy");
+
+  copy.onclick = function (e) {
+    e.preventDefault();
+
+    var domain  = value("domain");
+    var username = value("username");
+    var master = value("master");
+
+    if (!domain || !username || !master) {
+      return alert("All fields must be filled in");
+    }
+
+    byId("master").value = "";
+
+    var pass = olapass("https", domain, username, master);
+    setOutput(pass);
+    copyOutputToClipboard();
+    setTimeout(function () {
+      setOutput("");
+    }, 10);
+  };
+
+  show.onclick = function (e) {
+    e.preventDefault();
+
+    var domain  = value("domain");
+    var username = value("username");
+    var master = value("master");
+
+    if (!domain || !username || !master) {
+      return alert("All fields must be filled in");
+    }
+
+    if (!confirm("Are you sure?")) {
+      return;
+    }
+
+    byId("master").value = "";
+
+    var pass = olapass("https", domain, username, master);
+    setOutput(pass);
+  };
+};
+
+},{"../olapass":15}],2:[function(require,module,exports){
 'use strict'
 
 exports.byteLength = byteLength
@@ -114,7 +190,7 @@ function fromByteArray (uint8) {
   return parts.join('')
 }
 
-},{}],2:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 /*!
  * The buffer module from node.js, for the browser.
  *
@@ -1830,7 +1906,7 @@ function numberIsNaN (obj) {
   return obj !== obj // eslint-disable-line no-self-compare
 }
 
-},{"base64-js":1,"ieee754":3}],3:[function(require,module,exports){
+},{"base64-js":2,"ieee754":4}],4:[function(require,module,exports){
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
   var eLen = nBytes * 8 - mLen - 1
@@ -1916,7 +1992,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128
 }
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -1941,7 +2017,7 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 /* eslint-disable node/no-deprecated-api */
 var buffer = require('buffer')
 var Buffer = buffer.Buffer
@@ -2005,7 +2081,7 @@ SafeBuffer.allocUnsafeSlow = function (size) {
   return buffer.SlowBuffer(size)
 }
 
-},{"buffer":2}],6:[function(require,module,exports){
+},{"buffer":3}],7:[function(require,module,exports){
 var Buffer = require('safe-buffer').Buffer
 
 // prototype class for hash functions
@@ -2088,7 +2164,7 @@ Hash.prototype._update = function () {
 
 module.exports = Hash
 
-},{"safe-buffer":5}],7:[function(require,module,exports){
+},{"safe-buffer":6}],8:[function(require,module,exports){
 var exports = module.exports = function SHA (algorithm) {
   algorithm = algorithm.toLowerCase()
 
@@ -2105,7 +2181,7 @@ exports.sha256 = require('./sha256')
 exports.sha384 = require('./sha384')
 exports.sha512 = require('./sha512')
 
-},{"./sha":8,"./sha1":9,"./sha224":10,"./sha256":11,"./sha384":12,"./sha512":13}],8:[function(require,module,exports){
+},{"./sha":9,"./sha1":10,"./sha224":11,"./sha256":12,"./sha384":13,"./sha512":14}],9:[function(require,module,exports){
 /*
  * A JavaScript implementation of the Secure Hash Algorithm, SHA-0, as defined
  * in FIPS PUB 180-1
@@ -2201,7 +2277,7 @@ Sha.prototype._hash = function () {
 
 module.exports = Sha
 
-},{"./hash":6,"inherits":4,"safe-buffer":5}],9:[function(require,module,exports){
+},{"./hash":7,"inherits":5,"safe-buffer":6}],10:[function(require,module,exports){
 /*
  * A JavaScript implementation of the Secure Hash Algorithm, SHA-1, as defined
  * in FIPS PUB 180-1
@@ -2302,7 +2378,7 @@ Sha1.prototype._hash = function () {
 
 module.exports = Sha1
 
-},{"./hash":6,"inherits":4,"safe-buffer":5}],10:[function(require,module,exports){
+},{"./hash":7,"inherits":5,"safe-buffer":6}],11:[function(require,module,exports){
 /**
  * A JavaScript implementation of the Secure Hash Algorithm, SHA-256, as defined
  * in FIPS 180-2
@@ -2357,7 +2433,7 @@ Sha224.prototype._hash = function () {
 
 module.exports = Sha224
 
-},{"./hash":6,"./sha256":11,"inherits":4,"safe-buffer":5}],11:[function(require,module,exports){
+},{"./hash":7,"./sha256":12,"inherits":5,"safe-buffer":6}],12:[function(require,module,exports){
 /**
  * A JavaScript implementation of the Secure Hash Algorithm, SHA-256, as defined
  * in FIPS 180-2
@@ -2494,7 +2570,7 @@ Sha256.prototype._hash = function () {
 
 module.exports = Sha256
 
-},{"./hash":6,"inherits":4,"safe-buffer":5}],12:[function(require,module,exports){
+},{"./hash":7,"inherits":5,"safe-buffer":6}],13:[function(require,module,exports){
 var inherits = require('inherits')
 var SHA512 = require('./sha512')
 var Hash = require('./hash')
@@ -2553,7 +2629,7 @@ Sha384.prototype._hash = function () {
 
 module.exports = Sha384
 
-},{"./hash":6,"./sha512":13,"inherits":4,"safe-buffer":5}],13:[function(require,module,exports){
+},{"./hash":7,"./sha512":14,"inherits":5,"safe-buffer":6}],14:[function(require,module,exports){
 var inherits = require('inherits')
 var Hash = require('./hash')
 var Buffer = require('safe-buffer').Buffer
@@ -2815,7 +2891,7 @@ Sha512.prototype._hash = function () {
 
 module.exports = Sha512
 
-},{"./hash":6,"inherits":4,"safe-buffer":5}],14:[function(require,module,exports){
+},{"./hash":7,"inherits":5,"safe-buffer":6}],15:[function(require,module,exports){
 var shajs = require("sha.js");
 
 // The amount of times a password is hashed.
@@ -2902,80 +2978,4 @@ module.exports = function (protocol, domain, username, master) {
   return password(options, protocol, domain, username, master);
 };
 
-},{"sha.js":7}],15:[function(require,module,exports){
-var olapass = require("../olapass");
-
-window.Olapass = olapass;
-
-function byId (id) {
-  return document.getElementById(id);
-}
-
-function value (id) {
-  return byId(id).value;
-}
-
-function setOutput (msg) {
-  var output = byId("output");
-  output.value = msg;
-}
-
-function copyOutputToClipboard () {
-  var copyText = document.getElementById("output");
-  copyText.select();
-  document.execCommand("Copy");
-}
-
-window.onload = function () {
-  setTimeout(function () {
-    byId("domain").focus();
-    setOutput("");
-  }, 1);
-
-  var show = byId("show");
-  var copy = byId("copy");
-
-  copy.onclick = function (e) {
-    e.preventDefault();
-
-    var domain  = value("domain");
-    var username = value("username");
-    var master = value("master");
-
-    if (!domain || !username || !master) {
-      return alert("All fields must be filled in");
-    }
-
-    byId("master").value = "";
-
-    var pass = olapass("https", domain, username, master);
-    setOutput(pass);
-    copyOutputToClipboard();
-    setTimeout(function () {
-      setOutput("");
-    }, 10);
-  };
-
-  show.onclick = function (e) {
-    e.preventDefault();
-
-    var domain  = value("domain");
-    var username = value("username");
-    var master = value("master");
-
-    if (!domain || !username || !master) {
-      return alert("All fields must be filled in");
-    }
-
-    if (!confirm("Are you sure?")) {
-      return;
-    }
-
-    byId("master").value = "";
-
-    var pass = olapass("https", domain, username, master);
-    setOutput(pass);
-  };
-};
-
-},{"../olapass":14}]},{},[15]);
+},{"sha.js":8}]},{},[1]);
